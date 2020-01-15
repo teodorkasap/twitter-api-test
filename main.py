@@ -4,6 +4,7 @@ import creds
 
 """
 check requirements.txt for environment packages
+testing twitter streaming api with tweepy
 """
 
 # * Specify file, where credentials are saved and initialize a dics with these 
