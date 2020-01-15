@@ -16,9 +16,20 @@ auth = tweepy.OAuthHandler(creds.get("api_key"), creds.get("api_secret"))
 auth.set_access_token(creds.get("access_token"), creds.get("access_secret"))
 api = tweepy.API(auth)
 
+unwanted_expressions = [
+    "giveaway",
+    "rt @",
+    "give away",
+    "check out"
+
+]
 
 class MyStreamListener(tweepy.StreamListener):
     def on_status(self, status):
+        if any(s in status.text.lower() for s in unwanted_expressions):
+            return
+        # for x in unwanted_expressions:
+            # if x not in status.text.lower():
         print(status.text)
     def on_error(self, status_code):
         if status_code == 420:
@@ -26,6 +37,6 @@ class MyStreamListener(tweepy.StreamListener):
 
 stream_listener = MyStreamListener()
 stream = tweepy.Stream(auth=api.auth, listener=stream_listener)
-stream.filter(track=["python"],languages=['en'])
+stream.filter(track=["bitcoin","bitcoinnews","bitcoins","bitcoinprice","bitcoinvalue","bitcointrader"],languages=['en'])
 
 
